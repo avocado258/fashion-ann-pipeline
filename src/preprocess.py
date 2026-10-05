@@ -20,8 +20,9 @@ def main():
     X_test = test_raw["images"].astype("float32") / 255.0
     y_test = test_raw["labels"]
 
-    X_train_full = train_raw["images"].astype("float32") / 127.5 - 1.0
-    X_test = test_raw["images"].astype("float32") / 127.5 - 1.0
+    mean, std = X_train_full.mean(), X_train_full.std()
+    X_train_full = (X_train_full - mean) / std
+    X_test = (X_test - mean) / std
 
     X_train, X_val, y_train, y_val = train_test_split(
         X_train_full,
